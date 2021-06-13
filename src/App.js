@@ -18,9 +18,7 @@ function App() {
   });
 
   const [editList, setEditList] = useState([]);
-  console.log("Edit", editList.task);
-  let tempTask = editList.filter((item) => item.id === list.id[0].task);
-  const [task, setTask] = useState(tempTask);
+  console.log("Edit", editList);
 
   useEffect(() => {
     localStorage.setItem("list", JSON.stringify(list));
@@ -40,31 +38,29 @@ function App() {
   };
 
   const handleEditClick = (id) => {
-    console.log("id", id);
+    // console.log("id", id);
     const editTask = list.filter((i) => i.id === id);
-    console.log("edit", editTask);
+    // console.log("edit", editTask);
     setEditList(editTask[0]);
   };
   const handleEditChange = (e) => {
     e.preventDefault();
-    console.log("edit", editList);
+    //console.log("edit", editList);
     const newList = { ...editList, task: e.target.value };
-    setTask(e.target.value);
-    console.log("new", newList);
+
+    //console.log("new", newList);
     setEditList(newList);
     console.log("editList", editList);
   };
 
-  const updateTodo = (id) => {
-    const updateTask = list.map((i) =>
-      i.id === id ? (list.task = task) : list.task
-    );
+  const updateTodo = (id, updatedTodo) => {
+    const updateTask = list.map((i) => (i.id === id ? updatedTodo : i));
     setList(updateTask);
   };
 
   const handleEditFormSubmit = (e) => {
     e.preventDefault();
-    updateTodo(editList.id);
+    updateTodo(editList.id, editList);
   };
 
   return (
